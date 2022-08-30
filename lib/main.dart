@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:home_inventory/constant/colors.dart';
 import 'package:home_inventory/constant/routes.dart';
+import 'package:home_inventory/screens/BasePage.dart';
 import 'package:home_inventory/screens/auth/SplashScreen.dart';
 import 'package:home_inventory/screens/inventory/InventoryList.dart';
 
@@ -15,21 +17,31 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "Home Inventory",
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: ThemeData(
           useMaterial3: true,
-          textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
+          textTheme: GoogleFonts.poppinsTextTheme(
+              Theme.of(context).textTheme.apply(bodyColor: AppColors.black)),
           primaryTextTheme:
-              GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)),
+              GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
+          scaffoldBackgroundColor: AppColors.lightgreen,
+          appBarTheme:
+              const AppBarTheme(backgroundColor: AppColors.lightgreen)),
       darkTheme: ThemeData(
           useMaterial3: true,
-          textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
+          textTheme: GoogleFonts.poppinsTextTheme(
+              Theme.of(context).textTheme.apply(bodyColor: AppColors.white)),
+          scaffoldBackgroundColor: AppColors.darkbgreen,
           primaryTextTheme:
-              GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)),
+              GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
+          appBarTheme:
+              const AppBarTheme(backgroundColor: AppColors.darkbgreen)),
       home: const SplashScreen(),
       routes: {
         Routes.splashRoute: (context) => const SplashScreen(),
+        Routes.basePageRoute: (context) => const BasePage(),
         Routes.homePageRoute: (context) => const InventoryListPage()
       },
     );

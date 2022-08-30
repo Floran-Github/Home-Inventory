@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(Duration(milliseconds: 1500),
-        () => Navigator.popAndPushNamed(context, Routes.homePageRoute));
+        () => Navigator.popAndPushNamed(context, Routes.basePageRoute));
   }
   @override
   Widget build(BuildContext context) {
