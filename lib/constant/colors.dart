@@ -8,4 +8,5 @@ class AppColors {
   static const Color sharedInv = Color(0xff339949);
   static const Color myInv = Color(0xff49B1D1);
   static const Color mediumgreen = Color(0xff40755D);
+  static const Color purhcaseCardGreen = Color(0xff91C4AC);
 }
