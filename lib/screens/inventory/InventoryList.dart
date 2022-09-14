@@ -60,13 +60,12 @@ class _InventoryListPageState extends State<InventoryListPage>
       child: Container(
         margin: const EdgeInsets.only(bottom: 20),
         child: const Text(
-          "Inventorys",
+          "Inventories",
           style: TextStyle(fontSize: 23),
         ),
       ),
     );
   }
-  
 
   @override
   bool get wantKeepAlive => true;

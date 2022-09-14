@@ -14,18 +14,45 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-   @override
+  @override
   void initState() {
     super.initState();
     Timer(const Duration(milliseconds: 1500),
         () => Navigator.popAndPushNamed(context, Routes.basePageRoute));
   }
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Padding(
-        padding: EdgeInsets.all(10),
-        child: Center(child: Text("Home Inventory")),
+    return Scaffold(
+      body: Column(
+        children: [
+          Expanded(
+            child: Center(
+                child: Text(
+              "Home Inventory",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 72, fontWeight: FontWeight.w400),
+            )),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 30.0),
+              child: Column(
+                children: [
+                  Text(
+                    "From",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w100),
+                  ),
+                  Text(
+                    "Floran",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w100),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
