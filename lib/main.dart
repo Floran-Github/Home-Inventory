@@ -5,6 +5,7 @@ import 'package:home_inventory/constant/routes.dart';
 import 'package:home_inventory/screens/BasePage.dart';
 import 'package:home_inventory/screens/auth/SplashScreen.dart';
 import 'package:home_inventory/screens/inventory/InventoryList.dart';
+import 'package:home_inventory/screens/purchase/PurhcaseDetail.dart';
 
 void main() {
   runApp(const MyApp());
@@ -42,7 +43,8 @@ class MyApp extends StatelessWidget {
       routes: {
         Routes.splashRoute: (context) => const SplashScreen(),
         Routes.basePageRoute: (context) => const BasePage(),
-        Routes.homePageRoute: (context) => const InventoryListPage()
+        Routes.homePageRoute: (context) => const InventoryListPage(),
+        Routes.purhcaseDetailRoute: (context) => const PurhcaseDetailPage(),
       },
     );
   }

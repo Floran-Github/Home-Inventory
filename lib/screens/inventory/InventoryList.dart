@@ -13,10 +13,15 @@ class InventoryListPage extends StatefulWidget {
   State<InventoryListPage> createState() => _InventoryListPageState();
 }
 
-class _InventoryListPageState extends State<InventoryListPage> {
+class _InventoryListPageState extends State<InventoryListPage>
+    with
+        AutomaticKeepAliveClientMixin<InventoryListPage>,
+        TickerProviderStateMixin {
   var tempinv = [0, 1, 1, 0, 0, 1, 1, 1, 1, 0];
   @override
   Widget build(BuildContext context) {
+    var isportait = MediaQuery.of(context).orientation == Orientation.portrait;
+
     return Scaffold(
       appBar: const CustomAppBar(),
       floatingActionButton: FloatingActionButton(
@@ -33,8 +38,8 @@ class _InventoryListPageState extends State<InventoryListPage> {
         child: CustomScrollView(slivers: [
           pageheader(context),
           SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: isportait ? 2 : 4),
               delegate: SliverChildBuilderDelegate(childCount: tempinv.length,
                   (BuildContext context, int index) {
                 return tempinv[index] == 1
@@ -61,4 +66,8 @@ class _InventoryListPageState extends State<InventoryListPage> {
       ),
     );
   }
+  
+
+  @override
+  bool get wantKeepAlive => true;
 }

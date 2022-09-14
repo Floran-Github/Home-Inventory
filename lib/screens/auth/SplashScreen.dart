@@ -17,14 +17,14 @@ class _SplashScreenState extends State<SplashScreen> {
    @override
   void initState() {
     super.initState();
-    Timer(Duration(milliseconds: 1500),
+    Timer(const Duration(milliseconds: 1500),
         () => Navigator.popAndPushNamed(context, Routes.basePageRoute));
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: EdgeInsets.all(10),
         child: Center(child: Text("Home Inventory")),
       ),
     );

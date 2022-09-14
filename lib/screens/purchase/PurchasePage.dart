@@ -12,7 +12,8 @@ class PurchasePage extends StatefulWidget {
   State<PurchasePage> createState() => _PurchasePageState();
 }
 
-class _PurchasePageState extends State<PurchasePage> {
+class _PurchasePageState extends State<PurchasePage>
+    with AutomaticKeepAliveClientMixin<PurchasePage>, TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,4 +47,7 @@ class _PurchasePageState extends State<PurchasePage> {
       )),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

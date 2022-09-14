@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:home_inventory/constant/colors.dart';
+import 'package:home_inventory/constant/routes.dart';
 
 class PurchaseRecordCard extends StatelessWidget {
   const PurchaseRecordCard(
@@ -21,32 +22,37 @@ class PurchaseRecordCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: AppColors.sharedInv,
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: AppColors.purhcaseCardGreen),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(10),
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(width: 1, color: AppColors.white)),
+      child: MaterialButton(
+        padding: const EdgeInsets.all(0.0),
+        onPressed: () =>
+            Navigator.pushNamed(context, Routes.purhcaseDetailRoute),
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: AppColors.purhcaseCardGreen),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(width: 1, color: AppColors.white)),
+                ),
+                child: Text(
+                  "Purchase for: $inventory",
+                  style: const TextStyle(color: AppColors.black, fontSize: 18),
+                ),
               ),
-              child: Text(
-                "Purchase for: $inventory",
-                style: const TextStyle(color: AppColors.black, fontSize: 18),
-              ),
-            ),
-            purchaseCardDateRow(date),
-            purchaseCardRow("Amount", amount),
-            purchaseCardRow("Quantity", qty),
-            SizedBox(
-              height: 10,
-            )
-          ],
+              purchaseCardDateRow(date),
+              purchaseCardRow("Amount", amount),
+              purchaseCardRow("Quantity", qty),
+              SizedBox(
+                height: 10,
+              )
+            ],
+          ),
         ),
       ),
     );

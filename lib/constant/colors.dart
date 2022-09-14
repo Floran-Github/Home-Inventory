@@ -9,4 +9,5 @@ class AppColors {
   static const Color myInv = Color(0xff49B1D1);
   static const Color mediumgreen = Color(0xff40755D);
   static const Color purhcaseCardGreen = Color(0xff91C4AC);
+  static const Color purple = Color(0xff688DC5);
 }
