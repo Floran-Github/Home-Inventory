@@ -1,9 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-import '../constant/colors.dart';
 
 class NestedAppBar extends StatelessWidget with PreferredSizeWidget {
   const NestedAppBar({Key? key, required this.title}) : super(key: key);

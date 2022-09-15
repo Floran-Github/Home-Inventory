@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:home_inventory/constant/colors.dart';
 
@@ -30,7 +28,7 @@ class PurchaseRecordItem extends StatelessWidget {
             ),
             const Padding(
               padding:
-                  const EdgeInsets.only(bottom: 20, left: 8, right: 8, top: 8),
+                  EdgeInsets.only(bottom: 20, left: 8, right: 8, top: 8),
               child: Text(
                 "India gate basmati rice 5kg",
                 style: TextStyle(

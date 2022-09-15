@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import '../../constant/routes.dart';
 
@@ -18,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(milliseconds: 1500),
-        () => Navigator.popAndPushNamed(context, Routes.basePageRoute));
+        () => Navigator.popAndPushNamed(context, Routes.loginRoute));
   }
 
   @override
@@ -26,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Column(
         children: [
-          Expanded(
+          const Expanded(
             child: Center(
                 child: Text(
               "Home Inventory",
@@ -39,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 30.0),
               child: Column(
-                children: [
+                children: const [
                   Text(
                     "From",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w100),

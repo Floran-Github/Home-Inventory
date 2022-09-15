@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:home_inventory/constant/colors.dart';
 
 class OwnInventoryCard extends StatelessWidget {
@@ -34,7 +31,7 @@ class OwnInventoryCard extends StatelessWidget {
               child: Center(
                   child: Text(
                 "$inventoryName",
-                style: TextStyle(fontSize: 24, color: AppColors.white),
+                style: const TextStyle(fontSize: 24, color: AppColors.white),
                 textAlign: TextAlign.center,
               )),
             ))

@@ -4,6 +4,8 @@ import 'package:home_inventory/constant/colors.dart';
 import 'package:home_inventory/constant/routes.dart';
 import 'package:home_inventory/screens/BasePage.dart';
 import 'package:home_inventory/screens/auth/SplashScreen.dart';
+import 'package:home_inventory/screens/auth/login.dart';
+import 'package:home_inventory/screens/auth/sign_in.dart';
 import 'package:home_inventory/screens/inventory/InventoryList.dart';
 import 'package:home_inventory/screens/purchase/PurhcaseDetail.dart';
 
@@ -45,6 +47,9 @@ class MyApp extends StatelessWidget {
         Routes.basePageRoute: (context) => const BasePage(),
         Routes.homePageRoute: (context) => const InventoryListPage(),
         Routes.purhcaseDetailRoute: (context) => const PurhcaseDetailPage(),
+        Routes.signinRoute: (context) =>  const SigninPage(),
+        Routes.loginRoute: (context) =>   LoginPage(),
+
       },
     );
   }

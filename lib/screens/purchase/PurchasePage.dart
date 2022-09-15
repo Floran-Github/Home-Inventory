@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:home_inventory/widget/appbar.dart';
 
 import '../../widget/PurchaseRecordCard.dart';
@@ -17,7 +15,7 @@ class _PurchasePageState extends State<PurchasePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: SingleChildScrollView(
           child: Padding(
         padding: const EdgeInsets.all(10.0),
