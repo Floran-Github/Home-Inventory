@@ -125,6 +125,7 @@ Widget makeInput({label, obsureText = false, controller}) {
         height: 4,
       ),
       TextFormField(
+        style: TextStyle(color: AppColors.black),
         controller: controller,
         validator: (value) {
           if (value == null || value.isEmpty) {

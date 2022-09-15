@@ -136,6 +136,7 @@ class SigninPageState extends State<SigninPage> {
           height: 4,
         ),
         TextFormField(
+          style: TextStyle(color: AppColors.black),
           controller: controller,
           validator: (value) {
             if (value == null || value.isEmpty) {
@@ -168,6 +169,7 @@ class SigninPageState extends State<SigninPage> {
           height: 10,
         ),
         TextFormField(
+          style: TextStyle(color: AppColors.black),
           controller: controller,
           validator: (value) => EmailValidator.validate(value!)
               ? null
