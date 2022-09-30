@@ -7,5 +7,6 @@ class Routes {
   static String signinRoute = "/signinscreen";
   static String loginRoute = "/loginscreen";
     static String welcomeRoute = "/welcomescreen";
+    static String iMainRoute = "/imainscreen";
 
 }
