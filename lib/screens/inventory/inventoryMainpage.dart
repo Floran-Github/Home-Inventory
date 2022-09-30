@@ -29,9 +29,69 @@ class _InventoryMainPageState extends State<InventoryMainPage> {
             ),
           ),
           SliverToBoxAdapter(
-            child: Container(color: Colors.blue),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.blue[700],
+                    borderRadius: BorderRadius.circular(15)),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Name: ",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 23),
+                      ),
+                      Text(
+                        "Inventory_1",
+                        style: const TextStyle(fontSize: 26),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Owner: ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 23),
+                                ),
+                                Text(
+                                  "Saad Mulla",
+                                  style: const TextStyle(fontSize: 26),
+                                ),
+                              ]),
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Shared with :",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 23),
+                                ),
+                                Text(
+                                  "10 others",
+                                  style: const TextStyle(fontSize: 26),
+                                ),
+                              ]),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
-          detail(context, "Inventory_1", "Saad Mulla", 10),
+          detail(context),
           SliverGrid(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: isportait ? 2 : 4, childAspectRatio: 0.7),
@@ -45,9 +105,6 @@ class _InventoryMainPageState extends State<InventoryMainPage> {
 
   SliverToBoxAdapter detail(
     BuildContext context,
-    String name,
-    String owner,
-    int sharedwith,
   ) {
     return SliverToBoxAdapter(
       child: Padding(
@@ -55,42 +112,6 @@ class _InventoryMainPageState extends State<InventoryMainPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Name: ",
-              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 23),
-            ),
-            Text(
-              name,
-              style: const TextStyle(fontSize: 26),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  const Text(
-                    "Owner: ",
-                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 23),
-                  ),
-                  Text(
-                    "$owner",
-                    style: const TextStyle(fontSize: 26),
-                  ),
-                ]),
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  const Text(
-                    "Shared with :",
-                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 23),
-                  ),
-                  Text(
-                    "$sharedwith others",
-                    style: const TextStyle(fontSize: 26),
-                  ),
-                ]),
-              ],
-            ),
             const SizedBox(
               height: 10,
             ),
