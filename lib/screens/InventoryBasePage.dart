@@ -8,21 +8,20 @@ import 'package:home_inventory/screens/inventory/inventoryPurchasepage.dart';
 import 'package:home_inventory/screens/options/OptionsPage.dart';
 import 'package:home_inventory/screens/purchase/PurchasePage.dart';
 
-class BasePage extends StatefulWidget {
-  const BasePage({Key? key}) : super(key: key);
+class InventoryBasePage extends StatefulWidget {
+  const InventoryBasePage({Key? key}) : super(key: key);
 
   @override
-  State<BasePage> createState() => _BasePageState();
+  State<InventoryBasePage> createState() => _InventoryBasePageState();
 }
 
-class _BasePageState extends State<BasePage> with TickerProviderStateMixin {
+class _InventoryBasePageState extends State<InventoryBasePage> with TickerProviderStateMixin {
   int index = 1;
   late TabController tabController;
   List<String> tabs = [
     "Dashboard",
     "Inventory",
-    "Purchase",
-    "Option",
+    "Purchase"
   ];
 
   @override
@@ -78,9 +77,6 @@ class _BasePageState extends State<BasePage> with TickerProviderStateMixin {
             ),
             Tab(
               child: items[2],
-            ),
-            Tab(
-              child: items[3],
             )
           ],
         ),
