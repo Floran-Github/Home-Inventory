@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:home_inventory/model/auth/loginModel.dart';
+import 'package:home_inventory/response/authResponse.dart';
+import '../../bloc/authBloc.dart';
 import '../../constant/routes.dart';
+import '../../preference/preferences.dart';
 import 'sign_in.dart';
 
 import '../../constant/colors.dart';
@@ -13,6 +17,15 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  Preference prefs = Preference();
+  AuthBloc? _bloc;
+
+  @override
+  void initState() {
+    _bloc = AuthBloc();
+    super.initState();
+  }
+
   final _formKey = GlobalKey<FormState>();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -64,29 +77,40 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(
                         height: 40,
                       ),
-                      Center(
-                        child: MaterialButton(
-                          color: AppColors.white,
-                          minWidth: double.infinity,
-                          height: 55,
-                          shape: RoundedRectangleBorder(
-                              side: BorderSide(color: AppColors.darkbgreen),
-                              borderRadius: BorderRadius.circular(15)),
-                          onPressed: () => {
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => BasePage(),
-                                ),
-                                (route) => false)
-                          },
-                          child: Text(
-                            "Log In",
-                            style: TextStyle(
-                                fontSize: 25, color: AppColors.darkbgreen),
-                          ),
-                        ),
-                      ),
+                      StreamBuilder<AuthRepsonse<loginModel>>(
+                          stream: _bloc?.loginStream,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              switch (snapshot.data?.status) {
+                                case Status.LOADING:
+                                  return loadingBtn(context);
+                                case Status.COMPLETED:
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) {
+                                    prefs.setToken(snapshot.data!.data.token);
+                                    prefs.setUsername(
+                                        snapshot.data!.data.user.username);
+                                    Navigator.pushNamedAndRemoveUntil(context,
+                                        Routes.basePageRoute, (route) => false);
+                                  });
+                                  break;
+                                case Status.ERROR:
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(
+                                            content: Text(
+                                      "Username or Password not valid",
+                                      style: TextStyle(fontSize: 20),
+                                    )));
+                                  });
+                                  return loginBtn(context);
+                                default:
+                                  return loginBtn(context);
+                              }
+                            }
+                            return loginBtn(context);
+                          }),
                       const SizedBox(height: 20)
                     ],
                   ),
@@ -113,6 +137,51 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  // login function
+  login(BuildContext context, String username, String password) {
+    FocusScope.of(context).requestFocus(FocusNode());
+
+    if (_formKey.currentState!.validate()) {
+      _bloc?.login(username, password);
+    }
+  }
+
+  Center loginBtn(BuildContext context) {
+    return Center(
+      child: MaterialButton(
+        color: AppColors.white,
+        minWidth: double.infinity,
+        height: 55,
+        shape: RoundedRectangleBorder(
+            side: BorderSide(color: AppColors.darkbgreen),
+            borderRadius: BorderRadius.circular(15)),
+        onPressed: () =>
+            login(context, usernameController.text, passwordController.text),
+        child: Text(
+          "Log In",
+          style: TextStyle(fontSize: 25, color: AppColors.darkbgreen),
+        ),
+      ),
+    );
+  }
+}
+
+Center loadingBtn(BuildContext context) {
+  return Center(
+    child: MaterialButton(
+      color: AppColors.white,
+      minWidth: double.infinity,
+      height: 55,
+      shape: RoundedRectangleBorder(
+          side: BorderSide(color: AppColors.darkbgreen),
+          borderRadius: BorderRadius.circular(15)),
+      onPressed: () {},
+      child: CircularProgressIndicator(
+        color: AppColors.white,
+      ),
+    ),
+  );
 }
 
 Widget makeInput({label, obsureText = false, controller}) {

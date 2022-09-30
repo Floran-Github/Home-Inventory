@@ -16,8 +16,8 @@ class WelcomePage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  SizedBox(height: 40),
-                  Text("Welcome",
+                  const SizedBox(height: 40),
+                  const Text("Welcome",
                       style: TextStyle(
                         fontSize: 50,
                       )),
@@ -30,8 +30,8 @@ class WelcomePage extends StatelessWidget {
                       height: 316,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 30.0, bottom: 30.0),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 30.0, bottom: 30.0),
                     child: Text("Track your budget easily",
                         style: TextStyle(
                           fontSize: 20,
@@ -44,17 +44,17 @@ class WelcomePage extends StatelessWidget {
                       minWidth: double.infinity,
                       height: 60,
                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: AppColors.white),
+                          side: const BorderSide(color: AppColors.white),
                           borderRadius: BorderRadius.circular(15)),
                       onPressed: () =>
                           {Navigator.pushNamed(context, Routes.loginRoute)},
-                      child: Text(
+                      child: const Text(
                         "Login",
                         style: TextStyle(fontSize: 24, color: AppColors.black),
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Padding(
@@ -64,11 +64,11 @@ class WelcomePage extends StatelessWidget {
                       minWidth: double.infinity,
                       height: 60,
                       shape: RoundedRectangleBorder(
-                          side: BorderSide(color: AppColors.white),
+                          side: const BorderSide(color: AppColors.white),
                           borderRadius: BorderRadius.circular(15)),
                       onPressed: () =>
                           {Navigator.pushNamed(context, Routes.signinRoute)},
-                      child: Text(
+                      child: const Text(
                         "Register",
                         style: TextStyle(fontSize: 24, color: Colors.white),
                       ),

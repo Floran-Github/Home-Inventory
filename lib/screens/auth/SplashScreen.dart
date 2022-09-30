@@ -1,7 +1,12 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:home_inventory/bloc/authBloc.dart';
+import 'package:home_inventory/model/auth/authModel.dart';
+import 'package:home_inventory/response/authResponse.dart';
 
+import '../../constant/colors.dart';
 import '../../constant/routes.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,11 +17,12 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  AuthBloc? _authBloc;
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(milliseconds: 1500),
-        () => Navigator.popAndPushNamed(context, Routes.welcomeRoute));
+    _authBloc = AuthBloc();
+    _authBloc?.fetchIsAuth();
   }
 
   @override
@@ -24,14 +30,35 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Column(
         children: [
-          const Expanded(
-            child: Center(
-                child: Text(
-              "Home Inventory",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 72, fontWeight: FontWeight.w400),
-            )),
-          ),
+          StreamBuilder<AuthRepsonse<authModel>>(
+              stream: _authBloc?.authStream,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  switch (snapshot.data?.status) {
+                    case Status.LOADING:
+                      return mainArea();
+                    case Status.COMPLETED:
+                      WidgetsBinding.instance.addPostFrameCallback((_) =>
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, Routes.basePageRoute, (route) => false));
+                      break;
+                    case Status.ERROR:
+                      if (snapshot.data!.msg ==
+                          "Error During Communication: No Internet Connection") {
+                        return error();
+                      }
+
+                      WidgetsBinding.instance.addPostFrameCallback(
+                        (_) => Navigator.pushReplacementNamed(
+                            context, Routes.welcomeRoute),
+                      );
+                      break;
+                    default:
+                      return error();
+                  }
+                }
+                return mainArea();
+              }),
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
@@ -52,6 +79,51 @@ class _SplashScreenState extends State<SplashScreen> {
           )
         ],
       ),
+    );
+  }
+
+  Expanded error() {
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Center(
+            child: Icon(
+              CupertinoIcons.wifi_slash,
+              size: 100.0,
+            ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          MaterialButton(
+            onPressed: () async {
+              _authBloc?.fetchIsAuth();
+            },
+            color: AppColors.white,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                "Refresh",
+                style: TextStyle(fontSize: 25, color: AppColors.black),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Expanded mainArea() {
+    return const Expanded(
+      child: Center(
+          child: Text(
+        "Home Inventory",
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 72, fontWeight: FontWeight.w400),
+      )),
     );
   }
 }
