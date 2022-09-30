@@ -26,87 +26,89 @@ class _LoginPageState extends State<LoginPage> {
           onPressed: () => {Navigator.pop(context)},
           icon: Icon(
             Icons.arrow_back_ios_new,
-            color: Theme.of(context).brightness == Brightness.light
-                ? Colors.black
-                : Colors.white,
+            color: Colors.white,
           ),
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 50,
-            ),
-            Text(
-              "Login Page",
-              style: TextStyle(fontSize: 36),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0, left: 20.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    makeInput(
-                        label: "Username", controller: usernameController),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    makeInput(
-                        label: "Password",
-                        obsureText: true,
-                        controller: passwordController),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Center(
-                      child: MaterialButton(
-                        color: AppColors.white,
-                        minWidth: double.infinity,
-                        height: 55,
-                        shape: RoundedRectangleBorder(
-                            side: BorderSide(color: AppColors.darkbgreen),
-                            borderRadius: BorderRadius.circular(15)),
-                        onPressed: () => {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BasePage(),
-                              ),
-                              (route) => false)
-                        },
-                        child: Text(
-                          "Log In",
-                          style: TextStyle(
-                              fontSize: 20, color: AppColors.darkbgreen),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 50,
+              ),
+              Text(
+                "Login Page",
+                style: TextStyle(fontSize: 46),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 20.0, left: 20.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      makeInput(
+                          label: "Username", controller: usernameController),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      makeInput(
+                          label: "Password",
+                          obsureText: true,
+                          controller: passwordController),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      Center(
+                        child: MaterialButton(
+                          color: AppColors.white,
+                          minWidth: double.infinity,
+                          height: 55,
+                          shape: RoundedRectangleBorder(
+                              side: BorderSide(color: AppColors.darkbgreen),
+                              borderRadius: BorderRadius.circular(15)),
+                          onPressed: () => {
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BasePage(),
+                                ),
+                                (route) => false)
+                          },
+                          child: Text(
+                            "Log In",
+                            style: TextStyle(
+                                fontSize: 25, color: AppColors.darkbgreen),
+                          ),
                         ),
                       ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 30.0),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, Routes.signinRoute);
-                  },
-                  child: Text(
-                    "Don't have an Account!",
-                    style: TextStyle(color: AppColors.white),
+                      const SizedBox(height: 20)
+                    ],
                   ),
                 ),
               ),
-            )
-          ],
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 30.0),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, Routes.signinRoute);
+                    },
+                    child: Text(
+                      "Don't have an Account!",
+                      style: TextStyle(color: AppColors.white),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

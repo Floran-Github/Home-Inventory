@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:home_inventory/constant/routes.dart';
 import 'package:home_inventory/widget/appbar.dart';
 
+import '../../constant/colors.dart';
 import '../../widget/PurchaseRecordCard.dart';
 
 class PurchasePage extends StatefulWidget {
@@ -16,6 +18,17 @@ class _PurchasePageState extends State<PurchasePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(),
+      floatingActionButton: FloatingActionButton(
+          heroTag: "create",
+          shape: const CircleBorder(),
+          backgroundColor: AppColors.white,
+          onPressed: () =>
+              Navigator.pushNamed(context, Routes.purchaseCreateRoute),
+          child: const Icon(
+            Icons.add,
+            color: AppColors.mediumgreen,
+            size: 50,
+          )),
       body: SingleChildScrollView(
           child: Padding(
         padding: const EdgeInsets.all(10.0),

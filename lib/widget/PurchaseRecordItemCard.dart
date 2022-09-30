@@ -27,13 +27,12 @@ class PurchaseRecordItem extends StatelessWidget {
               ),
             ),
             const Padding(
-              padding:
-                  EdgeInsets.only(bottom: 20, left: 8, right: 8, top: 8),
+              padding: EdgeInsets.only(bottom: 20, left: 8, right: 8, top: 8),
               child: Text(
                 "India gate basmati rice 5kg",
                 style: TextStyle(
                     color: AppColors.white,
-                    fontSize: 26,
+                    fontSize: 24,
                     fontWeight: FontWeight.w600),
               ),
             ),

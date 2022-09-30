@@ -30,9 +30,7 @@ class SigninPageState extends State<SigninPage> {
           onPressed: () => {Navigator.pop(context)},
           icon: Icon(
             Icons.arrow_back_ios_new,
-            color: Theme.of(context).brightness == Brightness.light
-                ? Colors.black
-                : Colors.white,
+            color: Colors.white,
           ),
         ),
       ),
@@ -41,7 +39,7 @@ class SigninPageState extends State<SigninPage> {
           children: [
             const Text(
               "Register Page",
-              style: TextStyle(fontSize: 36),
+              style: TextStyle(fontSize: 46),
             ),
             const SizedBox(
               height: 16,
@@ -85,12 +83,8 @@ class SigninPageState extends State<SigninPage> {
                             side: BorderSide(color: AppColors.darkbgreen),
                             borderRadius: BorderRadius.circular(15)),
                         onPressed: () => {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BasePage(),
-                              ),
-                              (route) => false)
+                          Navigator.restorablePushNamedAndRemoveUntil(
+                              context, Routes.basePageRoute, (route) => false)
                         },
                         child: Text(
                           "Register",

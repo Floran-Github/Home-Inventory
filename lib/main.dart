@@ -7,6 +7,7 @@ import 'package:home_inventory/screens/auth/SplashScreen.dart';
 import 'package:home_inventory/screens/auth/login.dart';
 import 'package:home_inventory/screens/auth/sign_in.dart';
 import 'package:home_inventory/screens/inventory/InventoryList.dart';
+import 'package:home_inventory/screens/purchase/PurchaseOCRpage.dart';
 import 'package:home_inventory/screens/purchase/PurhcaseDetail.dart';
 
 void main() {
@@ -43,13 +44,13 @@ class MyApp extends StatelessWidget {
               const AppBarTheme(backgroundColor: AppColors.darkbgreen)),
       home: const SplashScreen(),
       routes: {
+        Routes.signinRoute: (context) => const SigninPage(),
+        Routes.loginRoute: (context) => LoginPage(),
         Routes.splashRoute: (context) => const SplashScreen(),
         Routes.basePageRoute: (context) => const BasePage(),
         Routes.homePageRoute: (context) => const InventoryListPage(),
         Routes.purhcaseDetailRoute: (context) => const PurhcaseDetailPage(),
-        Routes.signinRoute: (context) =>  const SigninPage(),
-        Routes.loginRoute: (context) =>   LoginPage(),
-
+        Routes.purchaseCreateRoute: (context) => const PurcaseOCRPage(),
       },
     );
   }

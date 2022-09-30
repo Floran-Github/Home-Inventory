@@ -17,6 +17,11 @@ class _PurhcaseDetailPageState extends State<PurhcaseDetailPage> {
       appBar: const NestedAppBar(title: "Purchase Record"),
       body: CustomScrollView(
         slivers: [
+          SliverToBoxAdapter(
+            child: const SizedBox(
+              height: 10,
+            ),
+          ),
           detail(
               context, "27 August 2022", "Dmart India,kandevali", 8000.0, 2500),
           SliverGrid(
@@ -46,7 +51,7 @@ class _PurhcaseDetailPageState extends State<PurhcaseDetailPage> {
             ),
             Text(
               date,
-              style: const TextStyle(fontSize: 29),
+              style: const TextStyle(fontSize: 26),
             ),
             const SizedBox(
               height: 10,
@@ -57,7 +62,7 @@ class _PurhcaseDetailPageState extends State<PurhcaseDetailPage> {
             ),
             Text(
               shopName,
-              style: const TextStyle(fontSize: 29),
+              style: const TextStyle(fontSize: 26),
             ),
             const SizedBox(
               height: 10,
@@ -72,7 +77,7 @@ class _PurhcaseDetailPageState extends State<PurhcaseDetailPage> {
                   ),
                   Text(
                     "Rs: $amt",
-                    style: const TextStyle(fontSize: 29),
+                    style: const TextStyle(fontSize: 26),
                   ),
                 ]),
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -82,7 +87,7 @@ class _PurhcaseDetailPageState extends State<PurhcaseDetailPage> {
                   ),
                   Text(
                     "$qty",
-                    style: const TextStyle(fontSize: 29),
+                    style: const TextStyle(fontSize: 26),
                   ),
                 ]),
               ],
