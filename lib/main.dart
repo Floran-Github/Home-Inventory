@@ -6,6 +6,7 @@ import 'package:home_inventory/screens/BasePage.dart';
 import 'package:home_inventory/screens/auth/SplashScreen.dart';
 import 'package:home_inventory/screens/auth/login.dart';
 import 'package:home_inventory/screens/auth/sign_in.dart';
+import 'package:home_inventory/screens/auth/welcomePage.dart';
 import 'package:home_inventory/screens/inventory/InventoryList.dart';
 import 'package:home_inventory/screens/purchase/PurchaseOCRpage.dart';
 import 'package:home_inventory/screens/purchase/PurhcaseDetail.dart';
@@ -51,7 +52,11 @@ class MyApp extends StatelessWidget {
         Routes.homePageRoute: (context) => const InventoryListPage(),
         Routes.purhcaseDetailRoute: (context) => const PurhcaseDetailPage(),
         Routes.purchaseCreateRoute: (context) => const PurcaseOCRPage(),
+        Routes.signinRoute: (context) => const SigninPage(),
+        Routes.loginRoute: (context) => LoginPage(),
+        Routes.welcomeRoute: (context) => const WelcomePage(),
       },
+      // initialRoute: Routes.welcomeRoute,
     );
   }
 }

@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(milliseconds: 1500),
-        () => Navigator.popAndPushNamed(context, Routes.loginRoute));
+        () => Navigator.popAndPushNamed(context, Routes.welcomeRoute));
   }
 
   @override

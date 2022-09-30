@@ -6,4 +6,6 @@ class Routes {
   static String purchaseCreateRoute = "/purchasecreatescreen";
   static String signinRoute = "/signinscreen";
   static String loginRoute = "/loginscreen";
+    static String welcomeRoute = "/welcomescreen";
+
 }
