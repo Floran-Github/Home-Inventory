@@ -12,6 +12,8 @@ import 'package:home_inventory/screens/inventory/InventoryList.dart';
 import 'package:home_inventory/screens/inventory/inventoryMainpage.dart';
 import 'package:home_inventory/screens/purchase/PurchaseOCRpage.dart';
 import 'package:home_inventory/screens/purchase/PurhcaseDetail.dart';
+import 'package:home_inventory/screens/purchase/manulentry/purchase_manul_entry.dart';
+import 'package:home_inventory/screens/purchase/purchase_select_market.dart';
 
 void main() {
   runApp(const MyApp());
@@ -56,6 +58,9 @@ class MyApp extends StatelessWidget {
         Routes.purchaseCreateRoute: (context) => const PurcaseOCRPage(),
         Routes.welcomeRoute: (context) => const WelcomePage(),
         Routes.iMainRoute: (context) => const InventoryBasePage(),
+        Routes.selectMarket: (context) =>
+            const PurchaseCreatePageSelectMarket(),
+        Routes.manualEntry: (context) => const ManualEntryPage(),
       },
       // initialRoute: Routes.welcomeRoute,
     );

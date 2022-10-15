@@ -26,7 +26,7 @@ class _PurhcaseDetailPageState extends State<PurhcaseDetailPage> {
               context, "27 August 2022", "Dmart India,kandevali", 8000.0, 2500),
           SliverGrid(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: isportait ? 2 : 4, childAspectRatio: 0.7),
+                crossAxisCount: isportait ? 2 : 4, childAspectRatio: 0.65),
             delegate:
                 SliverChildBuilderDelegate(childCount: 10, (context, index) {
               return const PurchaseRecordItem();

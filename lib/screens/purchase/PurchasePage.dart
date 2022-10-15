@@ -16,14 +16,14 @@ class _PurchasePageState extends State<PurchasePage>
     with AutomaticKeepAliveClientMixin<PurchasePage>, TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: const CustomAppBar(),
       floatingActionButton: FloatingActionButton(
           heroTag: "create",
           shape: const CircleBorder(),
           backgroundColor: AppColors.white,
-          onPressed: () =>
-              Navigator.pushNamed(context, Routes.purchaseCreateRoute),
+          onPressed: () => Navigator.pushNamed(context, Routes.selectMarket),
           child: const Icon(
             Icons.add,
             color: AppColors.mediumgreen,

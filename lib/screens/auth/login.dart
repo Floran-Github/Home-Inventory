@@ -4,10 +4,8 @@ import 'package:home_inventory/response/authResponse.dart';
 import '../../bloc/authBloc.dart';
 import '../../constant/routes.dart';
 import '../../preference/preferences.dart';
-import 'sign_in.dart';
 
 import '../../constant/colors.dart';
-import '../BasePage.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -37,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
         elevation: 0,
         leading: IconButton(
           onPressed: () => {Navigator.pop(context)},
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios_new,
             color: Colors.white,
           ),
@@ -48,10 +46,10 @@ class _LoginPageState extends State<LoginPage> {
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
-              Text(
+              const Text(
                 "Login Page",
                 style: TextStyle(fontSize: 46),
               ),
@@ -65,15 +63,22 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      makeInput(
-                          label: "Username", controller: usernameController),
+                      label("Username"),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      usernameInput(),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      label("Password"),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      passwordInput(context),
                       const SizedBox(
                         height: 12,
                       ),
-                      makeInput(
-                          label: "Password",
-                          obsureText: true,
-                          controller: passwordController),
                       const SizedBox(
                         height: 40,
                       ),
@@ -124,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       Navigator.pushNamed(context, Routes.signinRoute);
                     },
-                    child: Text(
+                    child: const Text(
                       "Don't have an Account!",
                       style: TextStyle(color: AppColors.white),
                     ),
@@ -135,6 +140,54 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
+    );
+  }
+
+  TextFormField passwordInput(BuildContext context) {
+    return TextFormField(
+      style: const TextStyle(color: AppColors.black),
+      obscureText: true,
+      controller: passwordController,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter password';
+        }
+        return null;
+      },
+      onFieldSubmitted: (v) =>
+          login(context, usernameController.text, passwordController.text),
+      decoration: InputDecoration(
+          filled: true,
+          fillColor: AppColors.white,
+          hintStyle: const TextStyle(fontSize: 12, color: Colors.grey),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+          hintText: 'Password'),
+    );
+  }
+
+  TextFormField usernameInput() {
+    return TextFormField(
+      style: const TextStyle(color: AppColors.black),
+      controller: usernameController,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter $label';
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+          filled: true,
+          fillColor: AppColors.white,
+          hintStyle: const TextStyle(fontSize: 12, color: Colors.grey),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+          hintText: 'Username'),
+    );
+  }
+
+  Text label(String label) {
+    return Text(
+      label,
+      style: const TextStyle(fontSize: 16),
     );
   }
 
@@ -154,11 +207,11 @@ class _LoginPageState extends State<LoginPage> {
         minWidth: double.infinity,
         height: 55,
         shape: RoundedRectangleBorder(
-            side: BorderSide(color: AppColors.darkbgreen),
+            side: const BorderSide(color: AppColors.darkbgreen),
             borderRadius: BorderRadius.circular(15)),
         onPressed: () =>
             login(context, usernameController.text, passwordController.text),
-        child: Text(
+        child: const Text(
           "Log In",
           style: TextStyle(fontSize: 25, color: AppColors.darkbgreen),
         ),
@@ -174,44 +227,12 @@ Center loadingBtn(BuildContext context) {
       minWidth: double.infinity,
       height: 55,
       shape: RoundedRectangleBorder(
-          side: BorderSide(color: AppColors.darkbgreen),
+          side: const BorderSide(color: AppColors.darkbgreen),
           borderRadius: BorderRadius.circular(15)),
       onPressed: () {},
-      child: CircularProgressIndicator(
+      child: const CircularProgressIndicator(
         color: AppColors.white,
       ),
     ),
-  );
-}
-
-Widget makeInput({label, obsureText = false, controller}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        label,
-        style: const TextStyle(fontSize: 16),
-      ),
-      const SizedBox(
-        height: 4,
-      ),
-      TextFormField(
-        style: TextStyle(color: AppColors.black),
-        controller: controller,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Please enter $label';
-          }
-          return null;
-        },
-        obscureText: obsureText,
-        decoration: InputDecoration(
-            filled: true,
-            fillColor: AppColors.white,
-            hintStyle: const TextStyle(fontSize: 12, color: Colors.grey),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-            hintText: 'Enter ' + label),
-      )
-    ],
   );
 }
