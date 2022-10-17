@@ -13,6 +13,7 @@ import 'package:home_inventory/screens/inventory/inventoryMainpage.dart';
 import 'package:home_inventory/screens/purchase/PurchaseOCRpage.dart';
 import 'package:home_inventory/screens/purchase/PurhcaseDetail.dart';
 import 'package:home_inventory/screens/purchase/manulentry/purchase_manul_entry.dart';
+import 'package:home_inventory/screens/purchase/ocrentry/bill_image_crop.dart';
 import 'package:home_inventory/screens/purchase/purchase_select_market.dart';
 
 void main() {
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
         Routes.selectMarket: (context) =>
             const PurchaseCreatePageSelectMarket(),
         Routes.manualEntry: (context) => const ManualEntryPage(),
+        Routes.sourceSelect: (context) => const BillImageCrop()
       },
       // initialRoute: Routes.welcomeRoute,
     );

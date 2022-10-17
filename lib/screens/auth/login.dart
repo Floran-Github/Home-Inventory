@@ -171,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
       controller: usernameController,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter $label';
+          return 'Please enter username';
         }
         return null;
       },
