@@ -53,6 +53,7 @@ class AuthBloc {
       loginModel loginData = await _authRepository.login(username, password);
       loginSink.add(AuthRepsonse.completed(loginData));
     } catch (e) {
+      print(e);
       loginSink.add(AuthRepsonse.error(e.toString()));
     }
   }

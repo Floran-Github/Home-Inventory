@@ -17,16 +17,19 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   Preference prefs = Preference();
   AuthBloc? _bloc;
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   void initState() {
     _bloc = AuthBloc();
+  
     super.initState();
   }
 
-  final _formKey = GlobalKey<FormState>();
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,6 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                                     prefs.setToken(snapshot.data!.data.token);
                                     prefs.setUsername(
                                         snapshot.data!.data.user.username);
+                                    prefs.setid(snapshot.data!.data.user.id);
                                     Navigator.pushNamedAndRemoveUntil(context,
                                         Routes.basePageRoute, (route) => false);
                                   });

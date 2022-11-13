@@ -12,35 +12,33 @@ class PurchaseRecordItem extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15), color: AppColors.purple),
-          child: Expanded(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(width: 1, color: AppColors.white)),
-                ),
-                child: const Text(
-                  "Item No: 1",
-                  style: TextStyle(color: AppColors.white, fontSize: 18),
-                ),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Container(
+              padding: const EdgeInsets.all(10),
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(width: 1, color: AppColors.white)),
               ),
-              const Padding(
-                padding: EdgeInsets.only(bottom: 20, left: 8, right: 8, top: 8),
-                child: Text(
-                  "India gate basmati rice 5kg",
-                  style: TextStyle(
-                      color: AppColors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600),
-                ),
+              child: const Text(
+                "Item No: 1",
+                style: TextStyle(color: AppColors.white, fontSize: 18),
               ),
-              purchaseCardRow("Price", "1200 Rs"),
-              purchaseCardRow("Qty", 12),
-            ]),
-          ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 20, left: 8, right: 8, top: 8),
+              child: Text(
+                "India gate basmati rice 5kg",
+                style: TextStyle(
+                    color: AppColors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600),
+              ),
+            ),
+            purchaseCardRow("Price", "1200 Rs"),
+            purchaseCardRow("Qty", 12),
+          ]),
         ));
   }
 

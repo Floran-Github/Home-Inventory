@@ -7,6 +7,12 @@ class Preference {
     pref.setString("token", token);
   }
 
+  // getting token
+  Future<String?> getToken() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    return pref.getString('token');
+  }
+
   // set username
   Future<void> setUsername(String username) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -19,9 +25,28 @@ class Preference {
     return pref.getString('username');
   }
 
-  // getting token
-  Future<String?> getToken() async {
+  // set username
+  Future<void> setid(int id) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    return pref.getString('token');
+    pref.setInt("id", id);
   }
+
+  // getting id
+  Future<int?> getid() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    return pref.getInt('id');
+  }
+
+  // set username
+  Future<void> setInvid(int id) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setInt("invid", id);
+  }
+
+  // getting id
+  Future<int?> getInvid() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    return pref.getInt('invid');
+  }
+
 }

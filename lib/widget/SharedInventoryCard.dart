@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:home_inventory/constant/colors.dart';
 import 'package:home_inventory/constant/routes.dart';
+import 'package:home_inventory/model/inventory/inventoryModel.dart';
 
 class SharedInventoryCard extends StatelessWidget {
-  const SharedInventoryCard({Key? key, this.inventoryName}) : super(key: key);
+  const SharedInventoryCard({Key? key, this.inventoryName, required this.invData}) : super(key: key);
   final String? inventoryName;
+  final inventoryModel invData;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(
-          context, Routes.iMainRoute),
+      onTap: () => Navigator.pushNamed(context, Routes.iMainRoute,arguments: {'invData':invData}),
       child: Card(
         color: AppColors.sharedInv,
         child: Container(

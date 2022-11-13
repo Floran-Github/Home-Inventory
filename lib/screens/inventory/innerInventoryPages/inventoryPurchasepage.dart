@@ -3,10 +3,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:home_inventory/widget/nestedappbar.dart';
 
-import '../../constant/colors.dart';
-import '../../constant/routes.dart';
-import '../../widget/PurchaseRecordCard.dart';
-import '../../widget/appbar.dart';
+import '../../../constant/colors.dart';
+import '../../../constant/routes.dart';
+import '../../../widget/PurchaseRecordCard.dart';
+import '../../../widget/appbar.dart';
 
 class InventoryPurchasePage extends StatefulWidget {
   const InventoryPurchasePage({super.key});
@@ -27,7 +27,7 @@ class _InventoryPurchasePageState extends State<InventoryPurchasePage> {
           shape: const CircleBorder(),
           backgroundColor: AppColors.white,
           onPressed: () =>
-              Navigator.pushNamed(context, Routes.purchaseCreateRoute),
+              Navigator.pushNamed(context, Routes.selectMarket),
           child: const Icon(
             Icons.add,
             color: AppColors.mediumgreen,

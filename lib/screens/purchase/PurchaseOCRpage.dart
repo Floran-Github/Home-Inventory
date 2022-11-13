@@ -75,9 +75,6 @@ class _PurcaseOCRPageState extends State<PurcaseOCRPage> {
       }
     }
     textScanning = false;
-    print("-----------------");
-    print(scannedText);
-    print("-----------------");
     setState(() {});
   }
 }

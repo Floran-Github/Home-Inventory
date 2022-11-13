@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_inventory/model/inventory/inventoryModel.dart';
 import 'package:home_inventory/widget/PurchaseRecordItemCard.dart';
 import 'package:home_inventory/widget/nestedappbar.dart';
 
@@ -29,7 +30,7 @@ class _PurhcaseDetailPageState extends State<PurhcaseDetailPage> {
                 crossAxisCount: isportait ? 2 : 4, childAspectRatio: 0.65),
             delegate:
                 SliverChildBuilderDelegate(childCount: 10, (context, index) {
-              return const PurchaseRecordItem();
+              return  PurchaseRecordItem();
             }),
           )
         ],

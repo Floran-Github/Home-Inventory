@@ -19,16 +19,16 @@ class _PurchasePageState extends State<PurchasePage>
     super.build(context);
     return Scaffold(
       appBar: const CustomAppBar(),
-      floatingActionButton: FloatingActionButton(
-          heroTag: "create",
-          shape: const CircleBorder(),
-          backgroundColor: AppColors.white,
-          onPressed: () => Navigator.pushNamed(context, Routes.selectMarket),
-          child: const Icon(
-            Icons.add,
-            color: AppColors.mediumgreen,
-            size: 50,
-          )),
+      // floatingActionButton: FloatingActionButton(
+      //     heroTag: "create",
+      //     shape: const CircleBorder(),
+      //     backgroundColor: AppColors.white,
+      //     onPressed: () => Navigator.pushNamed(context, Routes.selectMarket),
+      //     child: const Icon(
+      //       Icons.add,
+      //       color: AppColors.mediumgreen,
+      //       size: 50,
+      //     )),
       body: SingleChildScrollView(
           child: Padding(
         padding: const EdgeInsets.all(10.0),

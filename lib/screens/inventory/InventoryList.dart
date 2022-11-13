@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:home_inventory/bloc/inventoryBloc.dart';
 import 'package:home_inventory/constant/colors.dart';
+import 'package:home_inventory/model/inventory/inventoryModel.dart';
+import 'package:home_inventory/preference/preferences.dart';
+import 'package:home_inventory/response/inventoryResponse.dart';
 import 'package:home_inventory/widget/OwnInventoryCard.dart';
 import 'package:home_inventory/widget/SharedInventoryCard.dart';
 import 'package:home_inventory/widget/appbar.dart';
@@ -16,8 +20,29 @@ class _InventoryListPageState extends State<InventoryListPage>
         AutomaticKeepAliveClientMixin<InventoryListPage>,
         TickerProviderStateMixin {
   var tempinv = [0, 1, 1, 0, 0, 1, 1, 1, 1, 0];
+
+  InventoryBloc? _inventoryBloc;
+  Preference prefs = Preference();
+  int? id;
+  List<inventoryModel>? invList = [];
+  Future<void> getId() async {
+    var tempid = await prefs.getid();
+    setState(() {
+      id = tempid;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _inventoryBloc = InventoryBloc();
+    _inventoryBloc?.getInventory();
+    getId();
+  }
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     var isportait = MediaQuery.of(context).orientation == Orientation.portrait;
 
     return Scaffold(
@@ -33,22 +58,58 @@ class _InventoryListPageState extends State<InventoryListPage>
           )),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: CustomScrollView(slivers: [
-          pageheader(context),
-          SliverGrid(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: isportait ? 2 : 4),
-              delegate: SliverChildBuilderDelegate(childCount: tempinv.length,
-                  (BuildContext context, int index) {
-                return tempinv[index] == 1
-                    ? const OwnInventoryCard(
-                        inventoryName: "Sakinaka Home Inventory",
-                      )
-                    : const SharedInventoryCard(
-                        inventoryName: "Ghatkopar Home Inventory",
-                      );
-              })),
-        ]),
+        child: StreamBuilder<InventoryRepsonse<List<inventoryModel>>>(
+          stream: _inventoryBloc?.inventoryStream,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              switch (snapshot.data?.status) {
+                case Status.LOADING:
+                  return CircularProgressIndicator(
+                    color: Theme.of(context).textTheme.bodyText1?.color,
+                  );
+                case Status.COMPLETED:
+                  invList = snapshot.data?.data.toList();
+                  return CustomScrollView(slivers: [
+                    pageheader(context),
+                    SliverGrid(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: isportait ? 2 : 4),
+                        delegate: SliverChildBuilderDelegate(
+                            childCount: invList?.length,
+                            (BuildContext context, int index) {
+                          
+                          return invList![index].user_associated == id!
+                              ? OwnInventoryCard(
+                                  inventoryName: invList![index].invName,
+                                  invData: invList![index],
+                                )
+                              : SharedInventoryCard(
+                                  inventoryName: invList![index].invName,
+                                  invData: invList![index],
+                                );
+                        }))
+                  ]);
+
+                case Status.ERROR:
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                      snapshot.data!.msg,
+                      style: const TextStyle(fontSize: 20),
+                    )));
+                  });
+                  break;
+                default:
+                  return const Center(
+                    child: Text("No Inventory found"),
+                  );
+              }
+            }
+            return const Center(
+              child: Text("No Inventory found"),
+            );
+          },
+        ),
       ),
     );
   }

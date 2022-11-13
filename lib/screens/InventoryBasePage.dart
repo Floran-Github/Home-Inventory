@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:home_inventory/constant/colors.dart';
 import 'package:home_inventory/screens/dashboard/Dashboard.dart';
 import 'package:home_inventory/screens/inventory/InventoryList.dart';
-import 'package:home_inventory/screens/inventory/inventoryDashboardPage.dart';
-import 'package:home_inventory/screens/inventory/inventoryMainpage.dart';
-import 'package:home_inventory/screens/inventory/inventoryPurchasepage.dart';
+import 'package:home_inventory/screens/inventory/innerInventoryPages/inventoryDashboardPage.dart';
+import 'package:home_inventory/screens/inventory/innerInventoryPages/inventoryMainpage.dart';
+import 'package:home_inventory/screens/inventory/innerInventoryPages/inventoryPurchasepage.dart';
 import 'package:home_inventory/screens/options/OptionsPage.dart';
 import 'package:home_inventory/screens/purchase/PurchasePage.dart';
 

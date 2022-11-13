@@ -80,7 +80,9 @@ class _PurchaseCreatePageSelectMarketState
           ),
           Row(
             children: [
-              actionBtn(Icons.camera, "Scan The Bill", (() {})),
+              actionBtn(Icons.camera, "Scan The Bill", (() {
+                Navigator.pushNamed(context, Routes.sourceSelect,arguments: {'market':_radioOptions.toString()});
+              })),
               const SizedBox(
                 width: 20,
               ),
