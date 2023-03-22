@@ -19,7 +19,6 @@ class _BasePageState extends State<BasePage> with TickerProviderStateMixin {
     "Dashboard",
     "Inventory",
     "Purchase",
-    "Option",
   ];
 
   @override
@@ -49,7 +48,6 @@ class _BasePageState extends State<BasePage> with TickerProviderStateMixin {
       iconContainer(iconName: Icons.bar_chart_outlined),
       iconContainer(iconName: Icons.inventory),
       iconContainer(iconName: Icons.shopping_basket),
-      iconContainer(iconName: Icons.more_vert_sharp),
     ];
 
     return Scaffold(
@@ -59,13 +57,12 @@ class _BasePageState extends State<BasePage> with TickerProviderStateMixin {
           DashboardPage(),
           InventoryListPage(),
           PurchasePage(),
-          OptionPage()
         ],
       ),
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(color: AppColors.mediumgreen),
+        decoration: const BoxDecoration(color: Color(0xff292929)),
         child: TabBar(
-          indicator: const BoxDecoration(color: AppColors.darkbgreen),
+          indicator: const BoxDecoration(color: Color(0xff393939)),
           controller: tabController,
           tabs: [
             Tab(
@@ -77,9 +74,6 @@ class _BasePageState extends State<BasePage> with TickerProviderStateMixin {
             Tab(
               child: items[2],
             ),
-            Tab(
-              child: items[3],
-            )
           ],
         ),
       ),

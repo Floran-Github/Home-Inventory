@@ -12,4 +12,7 @@ class Routes {
   static String manualEntry = "/manualentry";
   static String sourceSelect = "/sourceselect";
   static String ocrDetail = "/ocrdetail";
+  static String receipePage = "/receipePage";
+  static String itemdetailPage = "/itemdetailPage";
+
 }

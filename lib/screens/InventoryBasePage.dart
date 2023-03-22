@@ -5,6 +5,7 @@ import 'package:home_inventory/screens/inventory/InventoryList.dart';
 import 'package:home_inventory/screens/inventory/innerInventoryPages/inventoryDashboardPage.dart';
 import 'package:home_inventory/screens/inventory/innerInventoryPages/inventoryMainpage.dart';
 import 'package:home_inventory/screens/inventory/innerInventoryPages/inventoryPurchasepage.dart';
+import 'package:home_inventory/screens/inventory/innerInventoryPages/inventoryReceipePage.dart';
 import 'package:home_inventory/screens/options/OptionsPage.dart';
 import 'package:home_inventory/screens/purchase/PurchasePage.dart';
 
@@ -15,14 +16,11 @@ class InventoryBasePage extends StatefulWidget {
   State<InventoryBasePage> createState() => _InventoryBasePageState();
 }
 
-class _InventoryBasePageState extends State<InventoryBasePage> with TickerProviderStateMixin {
+class _InventoryBasePageState extends State<InventoryBasePage>
+    with TickerProviderStateMixin {
   int index = 1;
   late TabController tabController;
-  List<String> tabs = [
-    "Dashboard",
-    "Inventory",
-    "Purchase"
-  ];
+  List<String> tabs = ["Dashboard", "Inventory", "Purchase", "Reciepe"];
 
   @override
   void initState() {
@@ -51,7 +49,7 @@ class _InventoryBasePageState extends State<InventoryBasePage> with TickerProvid
       iconContainer(iconName: Icons.bar_chart_outlined),
       iconContainer(iconName: Icons.inventory),
       iconContainer(iconName: Icons.shopping_basket),
-    
+      iconContainer(iconName: Icons.ramen_dining)
     ];
 
     return Scaffold(
@@ -61,12 +59,13 @@ class _InventoryBasePageState extends State<InventoryBasePage> with TickerProvid
           InventoryDashboard(),
           InventoryMainPage(),
           InventoryPurchasePage(),
+          InventoryReceipe()
         ],
       ),
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(color: AppColors.mediumgreen),
+        decoration: const BoxDecoration(color: Color(0xff292929)),
         child: TabBar(
-          indicator: const BoxDecoration(color: AppColors.darkbgreen),
+          indicator: const BoxDecoration(color: Color(0xff393939)),
           controller: tabController,
           tabs: [
             Tab(
@@ -77,6 +76,9 @@ class _InventoryBasePageState extends State<InventoryBasePage> with TickerProvid
             ),
             Tab(
               child: items[2],
+            ),
+            Tab(
+              child: items[3],
             )
           ],
         ),

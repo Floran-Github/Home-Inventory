@@ -93,16 +93,6 @@ class _InventoryMainPageState extends State<InventoryMainPage> {
                         ),
                       )
                     ]));
-
-                  // return SliverGrid(
-                  //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  //       crossAxisCount: isportait ? 2 : 4,
-                  //       childAspectRatio: 0.1),
-                  //   delegate: SliverChildBuilderDelegate(
-                  //       childCount: invprdList?.length, (context, index) {
-                  //     return const PurchaseRecordItem();
-                  //   }),
-                  // );
                   case Status.ERROR:
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

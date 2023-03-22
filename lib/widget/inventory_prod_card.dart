@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:home_inventory/constant/colors.dart';
+import 'package:home_inventory/constant/routes.dart';
 import 'package:home_inventory/model/inventory/productModel.dart';
 
 class InventoryPrdCard extends StatelessWidget {
@@ -12,14 +13,13 @@ class InventoryPrdCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        
-      },
+      onTap: () => Navigator.pushNamed(context, Routes.itemdetailPage),
       child: Card(
           color: AppColors.purple,
           child: Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15), color: AppColors.purple),
+                borderRadius: BorderRadius.circular(15),
+                color: AppColors.purple),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Container(
@@ -35,8 +35,8 @@ class InventoryPrdCard extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 20, left: 8, right: 8, top: 8),
+                padding: const EdgeInsets.only(
+                    bottom: 20, left: 8, right: 8, top: 8),
                 child: Text(
                   prdData.prdName,
                   style: const TextStyle(
@@ -47,7 +47,7 @@ class InventoryPrdCard extends StatelessWidget {
               ),
               purchaseCardRow("Price",
                   "${prdData.priceHistory[prdData.priceHistory.length - 1].prdPrice} Rs"),
-              purchaseCardRow("Qty",prdData.prdQty),
+              purchaseCardRow("Qty", prdData.prdQty),
             ]),
           )),
     );
