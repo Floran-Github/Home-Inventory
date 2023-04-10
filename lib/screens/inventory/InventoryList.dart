@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:home_inventory/bloc/inventoryBloc.dart';
 import 'package:home_inventory/constant/colors.dart';
@@ -50,7 +52,55 @@ class _InventoryListPageState extends State<InventoryListPage>
       floatingActionButton: FloatingActionButton(
           shape: const CircleBorder(),
           backgroundColor: AppColors.white,
-          onPressed: () {},
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    backgroundColor: Color(0xff393939),
+                    title: Text("Create New Inventory"),
+                    scrollable: true,
+                    actions: [
+                      MaterialButton(
+                        onPressed: () {},
+                        color: AppColors.sharedInv,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6)),
+                        child: Text(
+                          "Create",
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                      )
+                    ],
+                    content: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Inventory Name",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        TextField(
+                          decoration: InputDecoration(
+                              hintText: "Inventory Name",
+                              hintStyle: TextStyle(color: Color(0xfff9f9f9)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide(color: Colors.white))),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  );
+                });
+          },
           child: const Icon(
             Icons.add,
             color: AppColors.mediumgreen,
@@ -77,7 +127,6 @@ class _InventoryListPageState extends State<InventoryListPage>
                         delegate: SliverChildBuilderDelegate(
                             childCount: invList?.length,
                             (BuildContext context, int index) {
-                          
                           return invList![index].user_associated == id!
                               ? OwnInventoryCard(
                                   inventoryName: invList![index].invName,
