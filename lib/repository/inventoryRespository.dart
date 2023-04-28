@@ -13,7 +13,7 @@ class InventoryRepository {
   }
 
   // get inventory product
-  Future<List<ProductModel>> getInventoryPrd(int id) async {
+  Future<InventoryDetailModel> getInventoryPrd(int id) async {
     final response = await _services.inventoryProductList(id);
     return response;
   }

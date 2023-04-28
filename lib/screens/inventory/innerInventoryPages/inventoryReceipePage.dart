@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:home_inventory/bloc/receipeBloc.dart';
 import 'package:home_inventory/constant/colors.dart';
 import 'package:home_inventory/constant/routes.dart';
 import 'package:home_inventory/model/receipe/receipeListModel.dart';
 import 'package:home_inventory/response/receipeResponse.dart';
-import 'package:home_inventory/services/recipeAPIService.dart';
 import 'package:home_inventory/widget/nestedappbar.dart';
 
 class InventoryReceipe extends StatefulWidget {
@@ -23,7 +20,7 @@ class _InventoryReceipeState extends State<InventoryReceipe> {
   void initState() {
     super.initState();
     _bloc = ReceipeBloc();
-    // _bloc?.getReceipe();
+    _bloc?.getReceipe();
   }
 
   @override
@@ -35,21 +32,7 @@ class _InventoryReceipeState extends State<InventoryReceipe> {
         child: SingleChildScrollView(
             child: Column(
           children: [
-            spacer10(),
             title(),
-            spacer10(),
-            TextField(
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6)),
-                  hintText: "Search Receipes",
-                  fillColor: Colors.white,
-                  filled: true,
-                  prefixIcon: const Icon(Icons.search)),
-            ),
-            spacer10(),
-            spacer10(),
-            title2(),
             spacer10(),
             StreamBuilder<ReceipeResponse<List<ReceipeModel>>>(
               stream: _bloc?.receipeStream,
@@ -64,15 +47,37 @@ class _InventoryReceipeState extends State<InventoryReceipe> {
                     case Status.COMPLETED:
                       receipes = snapshot.data?.data.toList();
                       return ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: receipes!.length,
                         itemBuilder: (context, index) {
                           return Container(
-                            child: Column(
+                            margin: const EdgeInsets.symmetric(vertical: 8),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 12),
+                            decoration: BoxDecoration(
+                                color: AppColors.myInv,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(receipes![index].food_item),
-                                Text(receipes![index].duration),
+                                Flexible(
+                                  child: Text(
+                                    receipes![index].food_item,
+                                    style: const TextStyle(fontSize: 20),
+                                  ),
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Duration",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w800),
+                                    ),
+                                    Text(receipes![index].duration),
+                                  ],
+                                )
                               ],
                             ),
                           );
@@ -92,34 +97,11 @@ class _InventoryReceipeState extends State<InventoryReceipe> {
                       break;
                   }
                 }
-                return Text("Add product to get suggestions");
+                return const Text("Add product to get suggestions");
               },
             ),
-            // ListView.builder(
-            //   physics: const NeverScrollableScrollPhysics(),
-            //   shrinkWrap: true,
-            // )
           ],
-        )
-            // [SliverList(
-            //     delegate: SliverChildListDelegate([
-            //   Expanded(
-            //     child: GridView.builder(
-            //       physics: const NeverScrollableScrollPhysics(),
-            //       shrinkWrap: true,
-            //       itemCount: 20,
-            //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            //         crossAxisCount: 2,
-            //         childAspectRatio: MediaQuery.of(context).size.width /
-            //             (MediaQuery.of(context).size.height / 1.4),
-            //       ),
-            //       itemBuilder: (BuildContext context, int index) {
-            //         return receipeCard();
-            //       },
-            //     ),
-            //   )
-            // ]))],
-            ),
+        )),
       ),
     );
   }
@@ -167,21 +149,14 @@ class _InventoryReceipeState extends State<InventoryReceipe> {
   }
 
   Text title() {
-    return Text(
+    return const Text(
       "What would you like 2 make?",
       style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
     );
   }
 
-  Text title2() {
-    return Text(
-      "Recepies based on items you ",
-      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-    );
-  }
-
   SizedBox spacer10() {
-    return SizedBox(
+    return const SizedBox(
       height: 10,
     );
   }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:home_inventory/bloc/transactionBloc.dart';
 import 'package:home_inventory/model/inventory/inventoryModel.dart';
+import 'package:home_inventory/model/transaction/transDetail.dart';
+import 'package:home_inventory/response/transactionResponse.dart';
 import 'package:home_inventory/widget/PurchaseRecordItemCard.dart';
 import 'package:home_inventory/widget/nestedappbar.dart';
 
@@ -11,30 +14,91 @@ class PurhcaseDetailPage extends StatefulWidget {
 }
 
 class _PurhcaseDetailPageState extends State<PurhcaseDetailPage> {
+  TransactionBloc? _bloc;
+
+  @override
+  void initState() {
+    _bloc = TransactionBloc();
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    Map arguments = ModalRoute.of(context)?.settings.arguments as Map;
+    int id = arguments['id'];
+    _bloc?.transactionDetail(id);
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     var isportait = MediaQuery.of(context).orientation == Orientation.portrait;
+    List<TransItemModel> itemData = [];
     return Scaffold(
       appBar: const NestedAppBar(title: "Purchase Record"),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: const SizedBox(
-              height: 10,
-            ),
-          ),
-          detail(
-              context, "27 August 2022", "Dmart India,kandevali", 8000.0, 2500),
-          SliverGrid(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: isportait ? 2 : 4, childAspectRatio: 0.65),
-            delegate:
-                SliverChildBuilderDelegate(childCount: 10, (context, index) {
-              return  PurchaseRecordItem();
-            }),
-          )
-        ],
+      body: StreamBuilder<TransactionResponse<TransDetail>>(
+        stream: _bloc?.purchaseDetailStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            switch (snapshot.data?.status) {
+              case Status.LOADING:
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              case Status.COMPLETED:
+                return MainSec(context, isportait, snapshot.data!.data);
+              case Status.ERROR:
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                    snapshot.data!.msg,
+                    style: const TextStyle(fontSize: 20),
+                  )));
+                });
+                return errorMsg();
+              default:
+                return errorMsg();
+            }
+          }
+          return errorMsg();
+        },
       ),
+    );
+  }
+
+  Center errorMsg() {
+    return const Center(
+      child: Text("Something went wrong"),
+    );
+  }
+
+  CustomScrollView MainSec(
+      BuildContext context, bool isportait, TransDetail data) {
+    return CustomScrollView(
+      slivers: [
+        const SliverToBoxAdapter(
+          child: SizedBox(
+            height: 10,
+          ),
+        ),
+        detail(
+            context,
+            data.recordDetail.transDate,
+            data.recordDetail.marketAssocaited,
+            data.recordDetail.totalAmount,
+            data.recordDetail.totalItem),
+        SliverGrid(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: isportait ? 2 : 4, childAspectRatio: 0.65),
+          delegate: SliverChildBuilderDelegate(
+              childCount: data.prdDetail.length, (context, index) {
+            return PurchaseRecordItem(
+              index: index,
+              data: data.prdDetail[index],
+            );
+          }),
+        )
+      ],
     );
   }
 

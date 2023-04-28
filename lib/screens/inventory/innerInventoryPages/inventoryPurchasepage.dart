@@ -1,6 +1,10 @@
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import 'package:home_inventory/bloc/transactionBloc.dart';
+import 'package:home_inventory/model/transaction/transactionModel.dart';
+import 'package:home_inventory/preference/preferences.dart';
+import 'package:home_inventory/response/transactionResponse.dart';
 import 'package:home_inventory/widget/nestedappbar.dart';
 
 import '../../../constant/colors.dart';
@@ -16,18 +20,28 @@ class InventoryPurchasePage extends StatefulWidget {
 }
 
 class _InventoryPurchasePageState extends State<InventoryPurchasePage> {
+  TransactionBloc? _bloc;
+  Preference prefs = Preference();
+  List<TransactionRecordModel>? data = [];
+
+  @override
+  void initState() {
+    _bloc = TransactionBloc();
+    _bloc?.invPurchaseRecord();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NestedAppBar(
+      appBar: const NestedAppBar(
         title: "Home Inventory",
       ),
       floatingActionButton: FloatingActionButton(
           heroTag: "inventorycreate",
           shape: const CircleBorder(),
           backgroundColor: AppColors.white,
-          onPressed: () =>
-              Navigator.pushNamed(context, Routes.selectMarket),
+          onPressed: () => Navigator.pushNamed(context, Routes.selectMarket),
           child: const Icon(
             Icons.add,
             color: AppColors.mediumgreen,
@@ -42,20 +56,49 @@ class _InventoryPurchasePageState extends State<InventoryPurchasePage> {
             Container(
               margin: const EdgeInsets.only(bottom: 20),
               child: const Text(
-                "Ghatkopar Inventory Purchase Record",
-                style: TextStyle(fontSize: 23, color: Colors.amber),
+                "Inventory Purchase Record",
+                style: TextStyle(fontSize: 23),
               ),
             ),
-            ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: 10,
-              itemBuilder: (context, index) => PurchaseRecordCard(
-                inventory: "Inventory ${index + 1}",
-                date: "1$index Septemeber 2022",
-                amount: index + 1 * 105.90,
-                qty: index + 34,
-              ),
+            StreamBuilder<TransactionResponse<List<TransactionRecordModel>>>(
+              stream: _bloc?.invPurchaseStream,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  switch (snapshot.data?.status) {
+                    case Status.LOADING:
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    case Status.COMPLETED:
+                      data = snapshot.data?.data;
+                      return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: snapshot.data?.data.length,
+                        itemBuilder: (context, index) => PurchaseRecordCard(
+                          id: data![index].id,
+                          inventory: data![index].invAssociated,
+                          date: data![index].transDate,
+                          amount: data![index].totalAmount,
+                          qty: data![index].totalItem,
+                        ),
+                      );
+                    case Status.ERROR:
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                          snapshot.data!.msg,
+                          style: const TextStyle(fontSize: 20),
+                        )));
+                      });
+
+                      return const Center(child: Text(("Error occured")));
+                    default:
+                      return const Center(child: Text(("Error occured")));
+                  }
+                }
+                return const Center(child: Text("No Purchase Record"));
+              },
             )
           ],
         ),

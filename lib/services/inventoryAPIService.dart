@@ -44,11 +44,8 @@ class InventoryApiServices {
             'Authorization': 'Token $token'
           });
       var responseBody = _returnResponse(res);
-
-      List<ProductModel> prdList = List.from(responseBody)
-          .map((item) => ProductModel.fromMap(item))
-          .toList();
-      return prdList;
+      
+      return InventoryDetailModel.fromMap(responseBody);
     } on SocketException {
       throw FetchDataException("No Internet Connection");
     }

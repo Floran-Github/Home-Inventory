@@ -6,7 +6,6 @@ import 'package:home_inventory/preference/preferences.dart';
 import 'package:home_inventory/response/inventoryResponse.dart';
 import 'package:home_inventory/widget/inventory_prod_card.dart';
 
-import '../../../widget/PurchaseRecordItemCard.dart';
 import '../../../widget/nestedappbar.dart';
 
 class InventoryMainPage extends StatefulWidget {
@@ -31,15 +30,13 @@ class _InventoryMainPageState extends State<InventoryMainPage> {
     inventoryModel invData = arguments['invData'];
 
     _bloc?.getInventoryPrd(invData.id);
-    
+
     prefs.setInvid(invData.id);
     super.didChangeDependencies();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    var isportait = MediaQuery.of(context).orientation == Orientation.portrait;
     Map arguments = ModalRoute.of(context)?.settings.arguments as Map;
     inventoryModel invData = arguments['invData'];
     List<ProductModel>? invprdList = [];
@@ -48,33 +45,31 @@ class _InventoryMainPageState extends State<InventoryMainPage> {
         appBar: const NestedAppBar(
           title: "Inventory",
         ),
-        body: CustomScrollView(slivers: <Widget>[
-          const SliverToBoxAdapter(
-            child: SizedBox(
-              height: 10,
-            ),
-          ),
-          invDetailBox(invData),
-          detail(context),
-          StreamBuilder<InventoryRepsonse<List<ProductModel>>>(
-            stream: _bloc?.inventoryPrdStream,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                switch (snapshot.data?.status) {
-                  case Status.LOADING:
-                    return SliverToBoxAdapter(
-                      child: Center(
-                          child: CircularProgressIndicator(
-                        color: Theme.of(context).textTheme.bodyLarge?.color,
-                      )),
-                    );
-                  case Status.COMPLETED:
-                    invprdList = snapshot.data?.data.toList();
-                    return SliverList(
-                        delegate: SliverChildListDelegate([
-                      Expanded(
-                        child: GridView.builder(
-                          physics: NeverScrollableScrollPhysics(),
+        body: StreamBuilder<InventoryRepsonse<InventoryDetailModel>>(
+          stream: _bloc?.inventoryPrdStream,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              switch (snapshot.data?.status) {
+                case Status.LOADING:
+                  return Center(
+                      child: CircularProgressIndicator(
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
+                  ));
+                case Status.COMPLETED:
+                  invprdList = snapshot.data?.data.prdList.toList();
+                  return CustomScrollView(
+                    slivers: [
+                      const SliverToBoxAdapter(
+                        child: SizedBox(
+                          height: 10,
+                        ),
+                      ),
+                      invDetailBox(snapshot.data!.data.invdetail),
+                      detail(context),
+                      SliverList(
+                          delegate: SliverChildListDelegate([
+                        GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: invprdList!.length,
                           gridDelegate:
@@ -90,28 +85,26 @@ class _InventoryMainPageState extends State<InventoryMainPage> {
                               prdData: invprdList![index],
                             );
                           },
-                        ),
-                      )
-                    ]));
-                  case Status.ERROR:
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                        snapshot.data!.msg,
-                        style: const TextStyle(fontSize: 20),
-                      )));
-                    });
-                    break;
-                  default:
-                    break;
-                }
+                        )
+                      ])),
+                    ],
+                  );
+                case Status.ERROR:
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                      snapshot.data!.msg,
+                      style: const TextStyle(fontSize: 20),
+                    )));
+                  });
+                  return const Center(child: Text("No Product"));
+                default:
+                  return const Center(child: Text("No Product"));
               }
-              return const SliverToBoxAdapter(
-                child: Center(child: Text("No Product")),
-              );
-            },
-          ),
-        ]));
+            }
+            return const Center(child: Text("No Product"));
+          },
+        ));
   }
 
   SliverToBoxAdapter invDetailBox(inventoryModel invData) {
@@ -142,15 +135,15 @@ class _InventoryMainPageState extends State<InventoryMainPage> {
                   children: [
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
+                        children: [
+                          const Text(
                             "Owner: ",
                             style: TextStyle(
                                 fontWeight: FontWeight.w700, fontSize: 23),
                           ),
                           Text(
-                            "Saad Mulla",
-                            style: TextStyle(fontSize: 26),
+                            invData.user_associated,
+                            style: const TextStyle(fontSize: 26),
                           ),
                         ]),
                     Column(
@@ -179,20 +172,12 @@ class _InventoryMainPageState extends State<InventoryMainPage> {
   SliverToBoxAdapter detail(
     BuildContext context,
   ) {
-    return SliverToBoxAdapter(
+    return const SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              "Items:",
-              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 23),
-            ),
-          ],
+        padding: EdgeInsets.all(8),
+        child: Text(
+          "Items:",
+          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 23),
         ),
       ),
     );

@@ -3,57 +3,40 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-import 'package:home_inventory/model/inventory/productModel.dart';
+import 'package:home_inventory/model/transaction/transactionModel.dart';
 
 class TransDetail {
-  String market;
-  String transDate;
-  double totalAmount;
-  int totalItem;
-  List<ProductModel> products;
+  TransactionRecordModel recordDetail;
+  List<TransItemModel> prdDetail;
   TransDetail({
-    required this.market,
-    required this.transDate,
-    required this.totalAmount,
-    required this.totalItem,
-    required this.products,
+    required this.recordDetail,
+    required this.prdDetail,
   });
 
   TransDetail copyWith({
-    String? market,
-    String? transDate,
-    double? totalAmount,
-    int? totalItem,
-    List<ProductModel>? products,
+    TransactionRecordModel? recordDetail,
+    List<TransItemModel>? prdDetail,
   }) {
     return TransDetail(
-      market: market ?? this.market,
-      transDate: transDate ?? this.transDate,
-      totalAmount: totalAmount ?? this.totalAmount,
-      totalItem: totalItem ?? this.totalItem,
-      products: products ?? this.products,
+      recordDetail: recordDetail ?? this.recordDetail,
+      prdDetail: prdDetail ?? this.prdDetail,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'market': market,
-      'transDate': transDate,
-      'totalAmount': totalAmount,
-      'totalItem': totalItem,
-      'products': products.map((x) => x.toMap()).toList(),
+      'recordDetail': recordDetail.toMap(),
+      'prdDetail': prdDetail.map((x) => x.toMap()).toList(),
     };
   }
 
   factory TransDetail.fromMap(Map<String, dynamic> map) {
     return TransDetail(
-      market: map['market'] as String,
-      transDate: map['transDate'] as String,
-      totalAmount: map['totalAmount'] as double,
-      totalItem: map['totalItem'] as int,
-      products: List<ProductModel>.from(
-        (map['products']).map<ProductModel>(
-          (x) => ProductModel.fromMap(x),
+      recordDetail: TransactionRecordModel.fromMap(
+          map['recordDetail'] as Map<String, dynamic>),
+      prdDetail: List<TransItemModel>.from(
+        (map['prdDetail']).map<TransItemModel>(
+          (x) => TransItemModel.fromMap(x as Map<String, dynamic>),
         ),
       ),
     );
@@ -65,27 +48,107 @@ class TransDetail {
       TransDetail.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() {
-    return 'TransDetail(market: $market, transDate: $transDate, totalAmount: $totalAmount, totalItem: $totalItem, products: $products)';
-  }
+  String toString() =>
+      'TransDetail(recordDetail: $recordDetail, prdDetail: $prdDetail)';
 
   @override
   bool operator ==(covariant TransDetail other) {
     if (identical(this, other)) return true;
 
-    return other.market == market &&
-        other.transDate == transDate &&
-        other.totalAmount == totalAmount &&
-        other.totalItem == totalItem &&
-        listEquals(other.products, products);
+    return other.recordDetail == recordDetail &&
+        listEquals(other.prdDetail, prdDetail);
+  }
+
+  @override
+  int get hashCode => recordDetail.hashCode ^ prdDetail.hashCode;
+}
+
+class TransItemModel {
+  int id;
+  int prdQty;
+  double prdPerPrice;
+  double totalPrice;
+  int transactionAssociated;
+  String prdAssociated;
+  TransItemModel({
+    required this.id,
+    required this.prdQty,
+    required this.prdPerPrice,
+    required this.totalPrice,
+    required this.transactionAssociated,
+    required this.prdAssociated,
+  });
+
+  TransItemModel copyWith({
+    int? id,
+    int? prdQty,
+    double? prdPerPrice,
+    double? totalPrice,
+    int? transactionAssociated,
+    String? prdAssociated,
+  }) {
+    return TransItemModel(
+      id: id ?? this.id,
+      prdQty: prdQty ?? this.prdQty,
+      prdPerPrice: prdPerPrice ?? this.prdPerPrice,
+      totalPrice: totalPrice ?? this.totalPrice,
+      transactionAssociated:
+          transactionAssociated ?? this.transactionAssociated,
+      prdAssociated: prdAssociated ?? this.prdAssociated,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'prdQty': prdQty,
+      'prdPerPrice': prdPerPrice,
+      'totalPrice': totalPrice,
+      'transactionAssociated': transactionAssociated,
+      'prdAssociated': prdAssociated,
+    };
+  }
+
+  factory TransItemModel.fromMap(Map<String, dynamic> map) {
+    return TransItemModel(
+      id: map['id'] as int,
+      prdQty: map['prdQty'] as int,
+      prdPerPrice: map['prdPerPrice'] as double,
+      totalPrice: map['totalPrice'] as double,
+      transactionAssociated: map['transactionAssociated'] as int,
+      prdAssociated: map['prdAssociated'] as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory TransItemModel.fromJson(String source) =>
+      TransItemModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'TransItemModel(id: $id, prdQty: $prdQty, prdPerPrice: $prdPerPrice, totalPrice: $totalPrice, transactionAssociated: $transactionAssociated, prdAssociated: $prdAssociated)';
+  }
+
+  @override
+  bool operator ==(covariant TransItemModel other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id &&
+        other.prdQty == prdQty &&
+        other.prdPerPrice == prdPerPrice &&
+        other.totalPrice == totalPrice &&
+        other.transactionAssociated == transactionAssociated &&
+        other.prdAssociated == prdAssociated;
   }
 
   @override
   int get hashCode {
-    return market.hashCode ^
-        transDate.hashCode ^
-        totalAmount.hashCode ^
-        totalItem.hashCode ^
-        products.hashCode;
+    return id.hashCode ^
+        prdQty.hashCode ^
+        prdPerPrice.hashCode ^
+        totalPrice.hashCode ^
+        transactionAssociated.hashCode ^
+        prdAssociated.hashCode;
   }
 }

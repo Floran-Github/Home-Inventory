@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:home_inventory/bloc/transactionBloc.dart';
 import 'package:home_inventory/constant/routes.dart';
+import 'package:home_inventory/model/transaction/transactionModel.dart';
+import 'package:home_inventory/response/transactionResponse.dart';
 import 'package:home_inventory/widget/appbar.dart';
 
 import '../../constant/colors.dart';
@@ -14,21 +17,29 @@ class PurchasePage extends StatefulWidget {
 
 class _PurchasePageState extends State<PurchasePage>
     with AutomaticKeepAliveClientMixin<PurchasePage>, TickerProviderStateMixin {
+  TransactionBloc? _transactionBloc;
+
+  @override
+  void initState() {
+    _transactionBloc = TransactionBloc();
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _transactionBloc?.userPurchaseRecord();
+
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
+    List<TransactionRecordModel>? data = [];
+
     return Scaffold(
       appBar: const CustomAppBar(),
-      // floatingActionButton: FloatingActionButton(
-      //     heroTag: "create",
-      //     shape: const CircleBorder(),
-      //     backgroundColor: AppColors.white,
-      //     onPressed: () => Navigator.pushNamed(context, Routes.selectMarket),
-      //     child: const Icon(
-      //       Icons.add,
-      //       color: AppColors.mediumgreen,
-      //       size: 50,
-      //     )),
       body: SingleChildScrollView(
           child: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -42,16 +53,45 @@ class _PurchasePageState extends State<PurchasePage>
                 style: TextStyle(fontSize: 23),
               ),
             ),
-            ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: 10,
-              itemBuilder: (context, index) => PurchaseRecordCard(
-                inventory: "Inventory ${index + 1}",
-                date: "1$index Septemeber 2022",
-                amount: index + 1 * 105.90,
-                qty: index + 34,
-              ),
+            StreamBuilder<TransactionResponse<List<TransactionRecordModel>>>(
+              stream: _transactionBloc?.userPurchaseStream,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  switch (snapshot.data?.status) {
+                    case Status.LOADING:
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    case Status.COMPLETED:
+                      data = snapshot.data?.data;
+                      return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: snapshot.data?.data.length,
+                        itemBuilder: (context, index) => PurchaseRecordCard(
+                          id: data![index].id,
+                          inventory: data![index].invAssociated,
+                          date: data![index].transDate,
+                          amount: data![index].totalAmount,
+                          qty: data![index].totalItem,
+                        ),
+                      );
+                    case Status.ERROR:
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                          snapshot.data!.msg,
+                          style: const TextStyle(fontSize: 20),
+                        )));
+                      });
+
+                      return const Center(child: Text(("Error occured")));
+                    default:
+                      return const Center(child: Text(("Error occured")));
+                  }
+                }
+                return const Text("No Records");
+              },
             )
           ],
         ),

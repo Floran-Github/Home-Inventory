@@ -25,10 +25,10 @@ class _InventoryListPageState extends State<InventoryListPage>
 
   InventoryBloc? _inventoryBloc;
   Preference prefs = Preference();
-  int? id;
+  String? id;
   List<inventoryModel>? invList = [];
   Future<void> getId() async {
-    var tempid = await prefs.getid();
+    var tempid = await prefs.getUsername();
     setState(() {
       id = tempid;
     });
@@ -57,8 +57,8 @@ class _InventoryListPageState extends State<InventoryListPage>
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    backgroundColor: Color(0xff393939),
-                    title: Text("Create New Inventory"),
+                    backgroundColor: const Color(0xff393939),
+                    title: const Text("Create New Inventory"),
                     scrollable: true,
                     actions: [
                       MaterialButton(
@@ -66,7 +66,7 @@ class _InventoryListPageState extends State<InventoryListPage>
                         color: AppColors.sharedInv,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(6)),
-                        child: Text(
+                        child: const Text(
                           "Create",
                           style: TextStyle(fontSize: 20, color: Colors.white),
                         ),
@@ -82,18 +82,20 @@ class _InventoryListPageState extends State<InventoryListPage>
                               fontSize: 20,
                               fontWeight: FontWeight.w500),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         TextField(
                           decoration: InputDecoration(
                               hintText: "Inventory Name",
-                              hintStyle: TextStyle(color: Color(0xfff9f9f9)),
+                              hintStyle:
+                                  const TextStyle(color: Color(0xfff9f9f9)),
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(color: Colors.white))),
+                                  borderSide:
+                                      const BorderSide(color: Colors.white))),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                       ],
@@ -114,8 +116,10 @@ class _InventoryListPageState extends State<InventoryListPage>
             if (snapshot.hasData) {
               switch (snapshot.data?.status) {
                 case Status.LOADING:
-                  return CircularProgressIndicator(
-                    color: Theme.of(context).textTheme.bodyText1?.color,
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: Theme.of(context).textTheme.bodyText1?.color,
+                    ),
                   );
                 case Status.COMPLETED:
                   invList = snapshot.data?.data.toList();

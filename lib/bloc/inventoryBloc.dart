@@ -10,19 +10,19 @@ class InventoryBloc {
 
   // controller
   late StreamController<InventoryRepsonse<List<inventoryModel>>> _controller;
-  late StreamController<InventoryRepsonse<List<ProductModel>>>
+  late StreamController<InventoryRepsonse<InventoryDetailModel>>
       _productController;
 
   //  sink
   StreamSink<InventoryRepsonse<List<inventoryModel>>> get inventorySink =>
       _controller.sink;
-  StreamSink<InventoryRepsonse<List<ProductModel>>> get inventoryPrdSink =>
+  StreamSink<InventoryRepsonse<InventoryDetailModel>> get inventoryPrdSink =>
       _productController.sink;
 
   // stream
   Stream<InventoryRepsonse<List<inventoryModel>>> get inventoryStream =>
       _controller.stream;
-  Stream<InventoryRepsonse<List<ProductModel>>> get inventoryPrdStream =>
+  Stream<InventoryRepsonse<InventoryDetailModel>> get inventoryPrdStream =>
       _productController.stream;
 
   // constructor
@@ -30,7 +30,7 @@ class InventoryBloc {
   InventoryBloc() {
     _controller = StreamController<InventoryRepsonse<List<inventoryModel>>>();
     _productController =
-        StreamController<InventoryRepsonse<List<ProductModel>>>();
+        StreamController<InventoryRepsonse<InventoryDetailModel>>();
     _inventoryRepository = InventoryRepository();
   }
 
@@ -49,7 +49,7 @@ class InventoryBloc {
   getInventoryPrd(int id) async {
     inventoryPrdSink.add(InventoryRepsonse.loading("Fetching data.."));
     try {
-      List<ProductModel> prdList =
+      InventoryDetailModel prdList =
           await _inventoryRepository.getInventoryPrd(id);
       inventoryPrdSink.add(InventoryRepsonse.completed(prdList));
     } catch (e) {

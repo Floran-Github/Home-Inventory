@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:home_inventory/constant/colors.dart';
+import 'package:home_inventory/model/transaction/transDetail.dart';
 
 class PurchaseRecordItem extends StatelessWidget {
-  const PurchaseRecordItem({Key? key}) : super(key: key);
-
+  const PurchaseRecordItem({Key? key, required this.data, required this.index})
+      : super(key: key);
+  final int index;
+  final TransItemModel data;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -21,23 +24,23 @@ class PurchaseRecordItem extends StatelessWidget {
                 border: Border(
                     bottom: BorderSide(width: 1, color: AppColors.white)),
               ),
-              child: const Text(
-                "Item No: 1",
+              child: Text(
+                "Item No: $index",
                 style: TextStyle(color: AppColors.white, fontSize: 18),
               ),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(bottom: 20, left: 8, right: 8, top: 8),
               child: Text(
-                "India gate basmati rice 5kg",
+                data.prdAssociated,
                 style: TextStyle(
                     color: AppColors.white,
                     fontSize: 24,
                     fontWeight: FontWeight.w600),
               ),
             ),
-            purchaseCardRow("Price", "1200 Rs"),
-            purchaseCardRow("Qty", 12),
+            purchaseCardRow("Price", data.totalPrice),
+            purchaseCardRow("Qty", data.prdQty),
           ]),
         ));
   }

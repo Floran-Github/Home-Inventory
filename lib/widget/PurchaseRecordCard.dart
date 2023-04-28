@@ -9,8 +9,9 @@ class PurchaseRecordCard extends StatelessWidget {
       required this.inventory,
       required this.date,
       required this.amount,
-      this.qty})
+      this.qty, required this.id})
       : super(key: key);
+  final int id;
   final String inventory;
   final String date;
   final double amount;
@@ -22,8 +23,9 @@ class PurchaseRecordCard extends StatelessWidget {
       color: AppColors.sharedInv,
       child: MaterialButton(
         padding: const EdgeInsets.all(0.0),
-        onPressed: () =>
-            Navigator.pushNamed(context, Routes.purhcaseDetailRoute),
+        onPressed: () => Navigator.pushNamed(
+            context, Routes.purhcaseDetailRoute,
+            arguments: {'id': id}),
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),

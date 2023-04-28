@@ -56,20 +56,18 @@ class InventoryPrdCard extends StatelessWidget {
   Padding purchaseCardRow(String label, data) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 8),
-      child: Flexible(
-        child: RichText(
-            text: TextSpan(children: <TextSpan>[
-          TextSpan(
-              text: "$label : ",
-              style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
-                  fontSize: 20)),
-          TextSpan(
-              text: "$data",
-              style: GoogleFonts.poppins(color: Colors.white, fontSize: 20)),
-        ])),
-      ),
+      child: RichText(
+          text: TextSpan(children: <TextSpan>[
+        TextSpan(
+            text: "$label : ",
+            style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontSize: 20)),
+        TextSpan(
+            text: "$data",
+            style: GoogleFonts.poppins(color: Colors.white, fontSize: 20)),
+      ])),
     );
   }
 }
