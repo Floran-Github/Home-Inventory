@@ -1,5 +1,3 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:home_inventory/bloc/transactionBloc.dart';
 import 'package:home_inventory/model/transaction/transactionModel.dart';
@@ -10,7 +8,6 @@ import 'package:home_inventory/widget/nestedappbar.dart';
 import '../../../constant/colors.dart';
 import '../../../constant/routes.dart';
 import '../../../widget/PurchaseRecordCard.dart';
-import '../../../widget/appbar.dart';
 
 class InventoryPurchasePage extends StatefulWidget {
   const InventoryPurchasePage({super.key});

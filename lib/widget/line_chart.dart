@@ -28,9 +28,14 @@ class LineChartWidget extends StatelessWidget {
           maxY: maxY.toDouble(),
           gridData: FlGridData(show: false),
           titlesData: FlTitlesData(
-            rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          ),
+              rightTitles:
+                  AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              bottomTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                showTitles: true,
+                getTitlesWidget: (value, meta) => Text('$value'),
+              ))),
           borderData: FlBorderData(
               show: true,
               border: const Border(
@@ -48,7 +53,7 @@ class LineChartWidget extends StatelessWidget {
                 dotData: FlDotData(show: false),
                 belowBarData: BarAreaData(show: false),
                 spots: List.generate(datapoint.length, (i) {
-                  return FlSpot(dayList[i].toDouble(), datapoint[i].toDouble());
+                  return FlSpot(i.toDouble(), datapoint[i].toDouble());
                 })),
           ]),
       swapAnimationDuration: const Duration(milliseconds: 250),

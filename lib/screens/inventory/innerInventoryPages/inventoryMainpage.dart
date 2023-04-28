@@ -73,11 +73,8 @@ class _InventoryMainPageState extends State<InventoryMainPage> {
                           shrinkWrap: true,
                           itemCount: invprdList!.length,
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            childAspectRatio:
-                                MediaQuery.of(context).size.width /
-                                    (MediaQuery.of(context).size.height / 1.4),
                           ),
                           itemBuilder: (BuildContext context, int index) {
                             return InventoryPrdCard(

@@ -38,15 +38,13 @@ class InventoryPrdCard extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     bottom: 20, left: 8, right: 8, top: 8),
                 child: Text(
-                  prdData.prdName,
+                  prdData.prodAssociated.prdName,
                   style: const TextStyle(
                       color: AppColors.white,
                       fontSize: 24,
                       fontWeight: FontWeight.w600),
                 ),
               ),
-              purchaseCardRow("Price",
-                  "${prdData.priceHistory[prdData.priceHistory.length - 1].prdPrice} Rs"),
               purchaseCardRow("Qty", prdData.prdQty),
             ]),
           )),
